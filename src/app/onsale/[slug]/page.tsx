@@ -8,6 +8,7 @@ import Link from "next/link"
 import { allproductsdetail } from "@/sanity/lib/query"
 import { useEffect, useState } from "react"
 import { SanityFetch } from "@/sanity/lib/fetch"
+
 interface IOnSaleDetail {
     params: Promise<{ slug: string }>
 }
