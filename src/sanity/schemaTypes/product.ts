@@ -1,4 +1,6 @@
-export default {
+import { defineField } from "sanity";
+
+export const  product =  defineField({
     name: 'product',
     title: 'Product',
     type: 'document',
@@ -58,5 +60,5 @@ export default {
      
       },
     ],
-  };
+  });
   
