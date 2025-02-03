@@ -10,7 +10,7 @@ export const client = createClient({
     
   });
 
-  export async function SanityFetch({query,params = {}}){
+  export async function SanityFetch({query, params = {}}: { query: string, params?: Record<string, any> }){
 
       return await client.fetch(query,params) 
   }

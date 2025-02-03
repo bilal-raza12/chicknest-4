@@ -7,7 +7,8 @@ import { useCart } from "@/app/context/CartContext"
 import Link from "next/link"
 import { allproductsdetail } from "@/sanity/lib/query"
 import { useEffect, useState } from "react"
-import { SanityFetch } from "@/sanity/lib/fetch"
+import { client, SanityFetch } from "@/sanity/lib/fetch"
+import { groq } from "next-sanity"
 
 interface IOnSaleDetail {
     params: Promise<{ slug: string }>
@@ -19,9 +20,19 @@ const OnsaleDetail = ({params}:IOnSaleDetail) => {
             try {
 
                 const resolvedParams = await params;
-                const data: IProduct[] = await SanityFetch({ query: allproductsdetail });
-                const foundProduct = data.find(p => p.slug === resolvedParams.slug);
-                setProduct(foundProduct || null);
+                const data: IProduct[] = await client.fetch(
+                    groq`*[_type == 'product' ]{
+    slug,
+    name,
+    price,
+    description,
+     discount,
+    originalPrice,
+    rating,
+    "imageurl": image.asset->url`
+                );
+                // const foundProduct = data.find(p => p.slug === resolvedParams.slug);
+                setProduct(data[0] || null);
             }catch(e){
                 console.error('Failed to fetch product', e);
             }
