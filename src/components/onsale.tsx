@@ -3,7 +3,7 @@ import { IProduct } from '@/app/types/types';
 import { FcRating } from "react-icons/fc";
 
 import { client, SanityFetch } from '@/sanity/lib/fetch';
-import { allproductsdetail } from '@/sanity/lib/query';
+
 import { groq } from 'next-sanity';
 
 const OnSale = async () => {
