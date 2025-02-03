@@ -5,9 +5,9 @@ import { IProduct } from "@/app/types/types"
 import { FcRating } from "react-icons/fc"
 import { useCart } from "@/app/context/CartContext"
 import Link from "next/link"
-import { allproductsdetail } from "@/sanity/lib/query"
+
 import { useEffect, useState } from "react"
-import { client, SanityFetch } from "@/sanity/lib/fetch"
+import { client } from "@/sanity/lib/fetch"
 import { groq } from "next-sanity"
 
 interface IOnSaleDetail {
@@ -19,7 +19,7 @@ const OnsaleDetail = ({params}:IOnSaleDetail) => {
         const fetchProduct = async () => {
             try {
 
-                const resolvedParams = await params;
+                
                 const data: IProduct[] = await client.fetch(
                     groq`*[_type == 'product' ]{
     slug,
@@ -29,7 +29,9 @@ const OnsaleDetail = ({params}:IOnSaleDetail) => {
      discount,
     originalPrice,
     rating,
-    "imageurl": image.asset->url`
+    "imageurl": image.asset->url
+                }`
+                
                 );
                 // const foundProduct = data.find(p => p.slug === resolvedParams.slug);
                 setProduct(data[0] || null);

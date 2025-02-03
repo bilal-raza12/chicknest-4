@@ -2,11 +2,23 @@ import { IProduct } from '@/app/types/types';
 
 import { FcRating } from "react-icons/fc";
 
-import { SanityFetch } from '@/sanity/lib/fetch';
+import { client, SanityFetch } from '@/sanity/lib/fetch';
 import { allproductsdetail } from '@/sanity/lib/query';
+import { groq } from 'next-sanity';
 
 const OnSale = async () => {
-  const data1: IProduct[] = await SanityFetch({ query: allproductsdetail });
+  const data1: IProduct[] = await client.fetch(
+    groq`*[_type == 'product']{
+    slug,
+    name,
+    price,
+    description,
+     discount,
+    originalPrice,
+    rating,
+    "imageurl": image.asset->url
+  }`
+  )
   // const API_URL = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:3000" 
   // const res = await fetch('http://localhost:3000/api/onsale');
   // const data :IProduct[] = await res.json();
