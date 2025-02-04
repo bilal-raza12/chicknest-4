@@ -2,7 +2,7 @@ import { IProduct } from '@/app/types/types';
 
 import { FcRating } from "react-icons/fc";
 
-import { client, SanityFetch } from '@/sanity/lib/fetch';
+import { client } from '@/sanity/lib/fetch';
 
 import { groq } from 'next-sanity';
 

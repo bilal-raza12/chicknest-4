@@ -17,28 +17,22 @@ const OnsaleDetail = ({params}:IOnSaleDetail) => {
     const [product, setProduct] = useState<IProduct | null>(null);
     useEffect(() => {
         const fetchProduct = async () => {
-            try {
-
-                
-                const data: IProduct[] = await client.fetch(
-                    groq`*[_type == 'product' ]{
-    slug,
-    name,
-    price,
-    description,
-     discount,
-    originalPrice,
-    rating,
-    "imageurl": image.asset->url
-                }`
-                
-                );
-                // const foundProduct = data.find(p => p.slug === resolvedParams.slug);
-                setProduct(data[0] || null);
-            }catch(e){
-                console.error('Failed to fetch product', e);
-            }
-            };
+            const resolvedParams = await params;
+            const data: IProduct[] = await client.fetch(groq`*[_type == 'product']{
+               slug,
+               name,
+               price,
+               description,
+               originalPrice,
+               discount,
+               rating,
+               "imageurl": image.asset->url
+  
+  
+               }`)
+            const foundproduct = data.find(p => p.slug === resolvedParams.slug);
+            setProduct(foundproduct || null);
+        };
   
         fetchProduct();
     }, [ params ]);
